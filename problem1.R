@@ -65,7 +65,7 @@ run.tests <- function() {
     }))
 }
 
-
+# run.tests()
 
 # #######################   3)   ####################### #
 T <- 1000  # discard first 500 values
@@ -74,23 +74,29 @@ sample <- DGP(T=1000, a=0, b=0.8, epsilon.params=c(0.3, 0.4, 0.4, 0.3, 0.1, 0.1)
 plot(sample$y, type='l')
 points(sample$epsilon, type='l', col="green", lty=2, xlab="time")
 
-loglik.garch.gjr <- function(params, data) {  # params consists of 9 parameters: 2 AR params and 6 GJR params
-    ht <- params[8]
-    lik <- 0
-    for (i in 2:nrow(data)) {
-        resid <- data$y[i-1] - (params[1] + params[2]*data$y[i-1])  # note that this is resid[i-1] so to say, i.e. residual of the previous period
-        ht <- params[3] + params[4]*resid^2 + params[5]*ht + params[6]*resid^2*(resid<0)
-        lik <- lik + (-0.5*log(2*pi*ht)-0.5*(resid/ht))
-    }
-    return(lik)
-}
-optim(c(0, 0.6, 0.4, 0.3, 0.3, 0.4, 0.2, 0.2), function(params) loglik.garch.gjr(params, sample))
+#loglik.garch.gjr <- function(params, data) {  # params consists of 9 parameters: 2 AR params and 6 GJR params
+#    ht <- params[8]
+#    lik <- 0
+#    for (i in 3:(nrow(data)+1)) {
+#        resid <- data$y[i-1] - (params[1] + params[2]*data$y[i-2])  # note that this is resid[i-1] so to say, i.e. residual of the previous period
+#        ht <- params[3] + params[4]*resid^2 + params[5]*ht + params[6]*resid^2*(resid<0)
+#        lik <- lik + (-0.5*log(2*pi*ht)-0.5*(resid/ht))
+#    }
+#    return(lik)
+#}
+#loglik.garch <- function(params, data) {  # params consists of 7 parameters: 2 AR params and 5 GJR params
+#    ht <- params[7]
+#    lik <- 0
+#    for (i in 3:(nrow(data)+1)) {
+#        resid <- data$y[i-1] - (params[1] + params[2]*data$y[i-2])  # note that this is resid[i-1] so to say, i.e. residual of the previous period
+#        ht <- params[3] + params[4]*resid^2 + params[5]*ht
+#        lik <- lik + (-0.5*log(2*pi*ht)-0.5*(resid/ht))
+#    }
+#    return(lik)
+#}
+#optim(c(0, 0.6, 0.4, 0.3, 0.3, 0.4, 0.2, 0.2), function(params) loglik.garch.gjr(params, sample))
 
-#library(rugarch)
-#ugarchfit.model <- ugarchfit(ugarchspec(mean.model=list(armaOrder=c(1,1)), variance.model=list(model="gjrGARCH", garchOrder=c(1,1,1))))
-
-
-x <- rep(1,10)
-filter(x, c(1,-1))
-filter(x, c(1), sides=1)
-filter(x, rep(1,3), sides=1, circular=T)
+library(rugarch)
+ugarchfit.gjr.model <- ugarchfit(ugarchspec(mean.model=list(armaOrder=c(1,0)), variance.model=list(model="gjrGARCH", garchOrder=c(1,1,1))), data=sample)
+# #######################   4)   ####################### #
+ugarchfit.garch.model <- ugarchfit(ugarchspec(mean.model=list(armaOrder=c(1,0)), variance.model=list(model="fGARCH", submodel="GARCH", garchOrder=c(1,1))), data=sample)
