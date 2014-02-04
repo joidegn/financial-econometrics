@@ -51,11 +51,13 @@ run.tests <- function() {
                     #data <- zoo(DGP(T, 0, 0.5, 1))
                     data <- zoo(do.call(DGP, c(list(T=T), args.list[[model.num]])))
                     # conduct Engle test with m=2 lagged squared residuals 
-                    data$epsilon.lag1 <- lag(data$epsilon, -1, na.pad=T)  # note that lag has been overwritten by the zoo package
-                    data$epsilon.lag2 <- lag(data$epsilon, -2, na.pad=T)  # note that lag has been overwritten by the zoo package
-                    reg <- lm(epsilon^2~epsilon.lag1^2+epsilon.lag2^2, data=data)  # regress epsilon^2 on lags q lags of epsilon^2 and a constant
+                    data$lagged.y <- lag(data$y, 1, na.pad=T)  # note that lag has been overwritten by the zoo package
+                    reg.y <- lm(y~lagged.y, data=data)
+                    # TODO: is this correct? not too many rejections?
+                    residual.reg.data <- data.frame(resid.sq=reg.y$residuals[1:(T-2)]^2, resid.sq.lagged=lag(zoo(reg.y$residuals))^2)
+                    reg.residuals <- lm(resid.sq~resid.sq.lagged, data=residual.reg.data)  # regress epsilon^2 on lags q lags of epsilon^2 and a constant
                     #f.stat <- summary(reg)$fstatistic[1]  # I read somewhere to use that 
-                    TR.sq <- (nrow(data) - 2) * summary(reg)$r.squared
+                    TR.sq <- (nrow(data) - 2) * summary(reg.residuals)$r.squared
                     results[n, as.character(T)] <- TR.sq > critical.value
                 }
             }
@@ -65,7 +67,7 @@ run.tests <- function() {
     }))
 }
 
-# run.tests()
+run.tests()
 
 # #######################   3)   ####################### #
 T <- 1000  # discard first 500 values

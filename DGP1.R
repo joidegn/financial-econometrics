@@ -23,7 +23,7 @@ DGP <- function(T, a, b, epsilon.params, epsilon.specification="gaussian", initi
                 ht[i] <- params[1] + params[2]*epsilon[i-1]^2 + params[3]*ht[i-1]  # AR(2) specification of epsilon^2
                 epsilon[i] <- sqrt(ht[i]) * nu[i]
             }
-            return(data.frame(epsilon=epsilon), ht=ht)
+            return(data.frame(epsilon=epsilon, ht=ht))
         }
         if (spec=='GJR111') {  # epsilon.params is supposed to contain (a, b, c, d, epsilon[0], h[0])
             ht <- numeric(T)
