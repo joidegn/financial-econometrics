@@ -120,7 +120,14 @@ Note that since the off-diagonal elements of $\Sigma_t$ are identical we could u
 \\
 c) \\
 The intercept vector is given by $(\hat C \otimes I_2)vec(\hat C) = \begin{pmatrix} 0.0225 \\ 0.0285 \\ 0.0285 \\ 0.0761 \\ \end{pmatrix}$
-
+\\
+\\
+d) \\
+Exceedance correlations are correlation coefficients computed for return values above a threshold parameter $\theta$ (here $\theta$ is denoted in quantiles of the data). Exceedance correlations can be used to calculate conditional correlation. They capture assymetrie in the tail dependence (i.e. different dependence between high and low value returns). Empirical data on stock returns show asymmetric correlations while simple models which use e.g. multivariate normally distributed error terms or GARCH errors can not reproduce this behaviour. \citet{ang2002international} use show that regime switching models can reproduce asymmetric correlations.
+\\
+\\
+e) \\
+The figure shows conditional correlation coefficients between returns of S\&P 500 and FTSE 100 indices for two different time periods: 1984-1989 and 2000-2008. While for the period of 2000-2008 the exceedance correlations appear to be relatively stable with respect to the threshold parameter, the period of 1984-1989 shows a strong asymmetrie of correlation coefficients. Returns above the 50-percentile show a lower correlation. The correlation of returns off the two indices start growing again above the 70-percentile.
 \bibliographystyle{plainnat}
 \bibliography{/home/joi/workspace/latex/citations}
 \end{document}
