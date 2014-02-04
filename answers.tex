@@ -103,8 +103,23 @@ iii)
 \end{pmatrix}$}
 \label{correlogram1}
 \includegraphics[width=160mm]{graphs/problem2_simulated_series.png}
-
 \end{figure}
+\clearpage
+
+\subsection{}
+a) \\
+\\
+\\
+b) \\
+With $CC' = I_2CC'$ and $vec(A+B) = vec(A) + vec(B)$ follows: \\
+$vec(\Sigma_t) = vec(CC') + vec(B\Sigma_{t-1}B') + vec(A\varepsilon_{t-1}\varepsilon_{t-1}'A')$ \\ $ = (C \otimes I_2 )vec(C) + (B \otimes B)vec(\Sigma_{t-1}) + (a \otimes A)vec(\varepsilon_{t-1}\varepsilon_{t-1}')$
+\\
+\\
+Note that since the off-diagonal elements of $\Sigma_t$ are identical we could use the half-vectorization leaving out one of the two off-diagonal elements without losing information.
+\\
+\\
+c) \\
+The intercept vector is given by $(\hat C \otimes I_2)vec(\hat C) = \begin{pmatrix} 0.0225 \\ 0.0285 \\ 0.0285 \\ 0.0761 \\ \end{pmatrix}$
 
 \bibliographystyle{plainnat}
 \bibliography{/home/joi/workspace/latex/citations}
