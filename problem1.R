@@ -1,5 +1,5 @@
 source('DGP1.R')
-require('zoo')  # to mag lagging variables easier
+require('zoo')  # to make lagging variables easier
 
 # #######################   1)   ####################### #
 make.graphs <- function() {
@@ -19,14 +19,38 @@ make.graphs <- function() {
     for (T in c(200, 500, 1000)) {
         for (alpha in seq(0, 1, 0.1)) {
             cat('alpha: ', alpha, '\n')
-            data.A <- DGP(T, 0, alpha, c(0.1, 0.5, 0.4, 1, 1), 'ARCH2')  # ARCH 2 data with constant 0, alpha1=0.5, alpha2=0.4, initial values 1 and 1
+            data.A <- DGP(T, 0, alpha, c(0.1, 0.5, 0.4, 1, 1), 'ARCH2')  # ARCH 2 data with constant 0.1, alpha1=0.5, alpha2=0.4, initial values 1 and 1
             png(paste0('graphs/problem1_ModelB_T', T, '_alpha', alpha), width=640, height=480)
             plot(data.A[, 1], type='l', main=paste0('ARCH(2) T=', T, ' a=0, b=', alpha), xlab='t', ylab='y')
             points(data.A[, 2], type='l', col="green")
             dev.off()
         }
     }  # because why the hell not?
+
+    for (T in c(200, 500, 1000)) {
+        for (alpha in seq(0, 1, 0.1)) {
+            cat('alpha: ', alpha, '\n')
+            data.A <- DGP(T, 0, alpha, c(0.1, 0.5, 0.4, 1, 1), 'GARCH11')  # GARCH 1,1 data with constant 0.1, alpha1=0.5, alpha2=0.4, initial values 1 and 1
+            png(paste0('graphs/problem1_ModelB_GARCH_T', T, '_alpha', alpha), width=640, height=480)
+            plot(data.A[, 1], type='l', main=paste0('GARCH(1,1) T=', T, ' a=0, b=', alpha), xlab='t', ylab='y')
+            points(data.A[, 2], type='l', col="green")
+            dev.off()
+        }
+    }  # because why the hell not?
+
+    for (T in c(200, 500, 1000)) {
+        for (alpha in seq(0, 1, 0.1)) {
+            cat('alpha: ', alpha, '\n')
+            data.A <- DGP(T, 0, alpha, c(0.1, 0.5, 0.4, 0.5, 1, 1), 'GJR111')  # GJR 1,1,1 data with constant 0.1, alpha1=0.5, alpha2=0.4, alpha3=0.5, initial values 1 and 1
+            png(paste0('graphs/problem1_ModelB_GJR_T', T, '_alpha', alpha), width=640, height=480)
+            plot(data.A[, 1], type='l', main=paste0('GJR(1,1,1) T=', T, ' a=0, b=', alpha), xlab='t', ylab='y')
+            points(data.A[, 2], type='l', col="green")
+            dev.off()
+        }
+    }  # because why the hell not?
 }
+make.graphs()
+
 # #######################   2)   ####################### #
 
 # Engle test (ARCH-test)
@@ -66,8 +90,7 @@ run.tests <- function() {
         }
     }))
 }
-
-run.tests()
+#run.tests()
 
 # #######################   3)   ####################### #
 T <- 1000  # discard first 500 values

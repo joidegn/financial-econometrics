@@ -13,6 +13,39 @@
 \maketitle
 
 \section{Univariate type-ARCH models}
+Some figures:
+\begin{figure}[hc]
+\centering
+\caption{Edge case: b=1, random walk}
+\label{AR1}
+\includegraphics[width=120mm]{graphs/problem1_ModelA_T500_alpha1.png}
+\end{figure}
+
+
+\begin{figure}[hc]
+\centering
+\caption{AR(1): b=0.9, and ARCH(2): 0.1, 0.5 and 0.4 }
+\label{ARCH11}
+\includegraphics[width=120mm]{graphs/problem1_ModelB_T500_alpha09.png}
+\end{figure}
+
+\begin{figure}[hc]
+\centering
+\caption{AR(1): b=0.9, and GARCH(1,1): 0.1, 0.5 and 0.4}
+\caption*{Innovations are shown in green to highlight varying variance}
+\label{GARCH11}
+\includegraphics[width=120mm]{graphs/problem1_ModelB_GARCH_T500_alpha09.png}
+\end{figure}
+
+\begin{figure}[hc]
+\centering
+\caption{AR(1): b=0.9, and GJR(1,1,1): 0.1, 0.5, 0.4 and 0.5}
+\caption*{Innovations are shown in green to highlight varying variance}
+\label{GJR111}
+\includegraphics[width=120mm]{graphs/problem1_ModelB_GJR_T200_alpha08.png}
+\end{figure}
+
+\clearpage
 
 \section{Multivariate type-ARCH models}
 \subsection{}
@@ -101,7 +134,7 @@ iii)
 1 & 1 \\
 0 & 1 \\
 \end{pmatrix}$}
-\label{correlogram1}
+\label{BEKK}
 \includegraphics[width=160mm]{graphs/problem2_simulated_series.png}
 \end{figure}
 \clearpage
